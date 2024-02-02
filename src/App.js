@@ -3,6 +3,7 @@ import DisplaySelectedList from "./DisplaySelectedList";
 import "./App.css";
 import { useState } from "react";
 function App() {
+  const [search, setSearch] = useState("");
   const [listFruits, setListFruits] = useState([
     {
       name: "Banana",
@@ -23,6 +24,10 @@ function App() {
     {
       name: "Orange",
       id: 5,
+    },
+    {
+      name: "Mosambi",
+      id: 6,
     },
   ]);
   const [selectedList, setSelectedList] = useState([]);
@@ -50,12 +55,19 @@ function App() {
       setListFruits(modifiedList);
     }
   }
+  function onSearchHandler(event) {
+    setSearch(event.target.value);
+  }
+  console.log(search);
   return (
     <div className="container">
       <div className="list">
+        search
+        <input type="text" value={search} onChange={onSearchHandler}></input>
         <DisplayList
           listFruits={listFruits}
           onRemoveListHandler={onRemoveListHandler}
+          requiredSuffix={search}
         ></DisplayList>
       </div>
       <div className="selected-list">
@@ -67,5 +79,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
