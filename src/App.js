@@ -1,38 +1,20 @@
 import DisplayList from "./DisplayList";
 import DisplaySelectedList from "./DisplaySelectedList";
+import { useSelector, useDispatch } from "react-redux";
 import "./App.css";
 import { useState } from "react";
+import {fruitsActions} from './store';
 function App() {
+  const dispatch=useDispatch();
   const [search, setSearch] = useState("");
-  const [listFruits, setListFruits] = useState([
-    {
-      name: "Banana",
-      id: 1,
-    },
-    {
-      name: "Watermelon",
-      id: 2,
-    },
-    {
-      name: "Apple",
-      id: 3,
-    },
-    {
-      name: "Mango",
-      id: 4,
-    },
-    {
-      name: "Orange",
-      id: 5,
-    },
-    {
-      name: "Mosambi",
-      id: 6,
-    },
-  ]);
-  const [selectedList, setSelectedList] = useState([]);
+  const fruits= useSelector((state)=>state);
+  console.log(fruits.listFruits);
   function onRemoveListHandler(id) {
-    var selectedFruit;
+
+
+    dispatch(fruitsActions.removeFruitsList(id));
+
+    /*var selectedFruit;
     for (let i = 0; i < listFruits.length; i++) {
       if (id === listFruits[i].id) {
         selectedFruit = listFruits[i];
@@ -41,10 +23,13 @@ function App() {
     const modifiedList = listFruits.filter((ele) => ele.id !== id);
     const modifiedSelectedList = [selectedFruit, ...selectedList];
     setSelectedList(modifiedSelectedList);
-    setListFruits(modifiedList);
+    setListFruits(modifiedList);*/
   }
   function onAddListHandler(id) {
-    var selectedFruit;
+  
+    dispatch(fruitsActions.addFruitsList(id));
+  
+    /*  var selectedFruit;
     for (let i = 0; i < selectedList.length; i++) {
       if (id === selectedList[i].id) {
         selectedFruit = selectedList[i];
@@ -53,7 +38,8 @@ function App() {
       const modifiedList = [selectedFruit, ...listFruits];
       setSelectedList(modifiedSelectedList);
       setListFruits(modifiedList);
-    }
+    }*/
+    
   }
   function onSearchHandler(event) {
     setSearch(event.target.value);
@@ -65,14 +51,14 @@ function App() {
         search
         <input type="text" value={search} onChange={onSearchHandler}></input>
         <DisplayList
-          listFruits={listFruits}
+          listFruits={fruits.listFruits}
           onRemoveListHandler={onRemoveListHandler}
           requiredSuffix={search}
         ></DisplayList>
       </div>
       <div className="selected-list">
         <DisplaySelectedList
-          selectedList={selectedList}
+          selectedList={fruits.selectedList}
           onAddListHandler={onAddListHandler}
         ></DisplaySelectedList>
       </div>
