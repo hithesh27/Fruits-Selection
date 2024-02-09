@@ -17,7 +17,7 @@ export default function DisplayList({
     if (flag === 0) {
       filteredListFruits.push(fruits);
     }
-  }
+  }                                                                           
   if (requiredSuffix.length === 0) {
     filteredListFruits = listFruits;
   }
